@@ -1,17 +1,16 @@
 <template>
-<nuxt-link
-  :to="{ name: 'blog-slug', params: {
-    sys: id
-  }}"
-  class="wrapper"
->
-  <article class="card">
-    <nuxt-link :to="{ name: 'blog-slug'}" class="wrapper">
+  <nuxt-link
+    :to="{ name: 'blog-slug', params: {
+      sys: id
+    }}"
+    class="wrapper"
+  >
+    <article class="card">
       <h1 class="card_title">{{ title }}</h1>
       <p class="card_text">{{ id }}</p>
       <p class="card_date">{{ date }}</p>
-    </nuxt-link>
-  </article>
+    </article>
+  </nuxt-link>
 </template>
 <script>
 export default {

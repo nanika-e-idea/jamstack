@@ -1,6 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
-const pkg = require('./pakkage')
+const pkg = require('./package')
 const { getConfigForKeys } = require('./lib/config.js')
 const ctfConfig = getConfigForKeys([
   'CTF_BLOG_POST_TYPE_ID',
@@ -8,14 +8,36 @@ const ctfConfig = getConfigForKeys([
   'CTF_CDA_ACCESS_TOKEN'
 ])
 
-const { createClient } = require('./plugins/contentful.js')
+const { createClient } = require('./plugins/contentful')
 const cdaClient = createClient(ctfConfig)
-
-module.exports = {
-  generate: {
+const config = {
+ head: {
+   title: 'nuxt_page',
+   meta: [
+     { charset: 'utf-8' },
+     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+     { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+   ],
+   link: [ { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' } ]
+ },
+ loading: { color: '#3B8070' },
+ build: {
+   extend (config, { isDev, isClient }) {
+     if (isDev && isClient) {
+       config.module.rules.push({
+         enforce: 'pre',
+         test: /\.(js|vue)$/,
+         loader: 'eslint-loader',
+         exclude: /(node_modules)/
+       })
+     }
+   },
+ },
+ plugins: [ { src: '~plugins/contentful.js' } ],
+ generate: {
     routes() {
       return cdaClient
-        .getEntries(ctfConfig.CTF_BLOG_POST_TYPE_ID)
+        .getEntries({'content_type': ctfConfig.CTF_BLOG_POST_TYPE_ID})
         .then(entries => {
           return [...entries.items.map(entry => `/blog/${entry.fields.slug}`)]
         })
@@ -27,6 +49,7 @@ module.exports = {
     CTF_BLOG_POST_TYPE_ID: ctfConfig.CTF_BLOG_POST_TYPE_ID
   }
 }
+module.exports = config
 
 export default {
   mode: 'universal',
