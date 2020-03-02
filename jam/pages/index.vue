@@ -1,6 +1,7 @@
 <template>
   <section class="index">
-    <card v-for="(post,i) in posts"
+    <card
+      v-for="(post,i) in posts"
       :key="i"
       :title="post.fields.title"
       :id="post.sys.id"

@@ -21,7 +21,7 @@ export default {
   transition: 'slide-right',
   async asyncData({ env, params }) {
     return await client
-      .getEntry(params.sys)
+      .getEntry(params)
       .then(entrie => {
         return {
           article: entrie
