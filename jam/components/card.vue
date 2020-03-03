@@ -1,8 +1,6 @@
 <template>
   <nuxt-link
-    :to="{ name: 'blog-slug',
-           params: { sys: id }
-        }"
+    :to="{ name: 'blog-slug', params: { sys, id } }"
     class="wrapper"
   >
     <article class="card">

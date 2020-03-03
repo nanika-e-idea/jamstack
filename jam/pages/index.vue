@@ -1,7 +1,7 @@
 <template>
   <section class="index">
     <card
-      v-for="(post,i) in posts"
+      v-for="(post,i ) in posts"
       :key="i"
       :title="post.fields.title"
       :id="post.sys.id"
@@ -23,7 +23,7 @@ export default {
   },
   asyncData({ env, params}) {
     return client
-      .getEntries(env.CTF_BLOG_PODT_ID)
+      .getEntries(env.CTF_BLOG_POST_TYPE_ID)
       .then(entries =>{
         return {
           posts: entries.items
